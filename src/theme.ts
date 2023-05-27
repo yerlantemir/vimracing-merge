@@ -47,19 +47,24 @@ export const baseTheme = EditorView.baseTheme({
   },
 
   "&light.cm-merge-a .cm-changedText, &light .cm-deletedChunk .cm-deletedText": {
-    background: "linear-gradient(#ee443366, #ee443366) bottom/100% 2px no-repeat",
+    background: "#ffcccc",
+    color: "#8b0000"
   },
 
   "&dark.cm-merge-a .cm-changedText, &dark .cm-deletedChunk .cm-deletedText": {
-    background: "linear-gradient(#ffaa9966, #ffaa9966) bottom/100% 2px no-repeat",
+    background: "#ffcccc",
+    
+    color: "#8b0000"
   },
 
   "&light.cm-merge-b .cm-changedText": {
-    background: "linear-gradient(#22bb2266, #22bb2266) bottom/100% 2px no-repeat",
+    background: "#ffcccc",
+    color: "#8b0000"
   },
 
   "&dark.cm-merge-b .cm-changedText": {
-    background: "linear-gradient(#88ff8866, #88ff8866) bottom/100% 2px no-repeat",
+    background: "#ffcccc",
+    color: "#8b0000"
   },
 
   "del, ins": {

@@ -91,62 +91,42 @@ function deletionWidget(state: EditorState, chunk: Chunk) {
   let known = DeletionWidgets.get(chunk.changes)
   if (known) return known
 
+  
   let buildDOM = (view: EditorView) => {
-    let {highlightChanges, syntaxHighlightDeletions, mergeControls} = state.facet(mergeConfig)
+    let {highlightChanges} = state.facet(mergeConfig)
     let text = view.state.field(originalDoc).sliceString(chunk.fromA, chunk.endA)
-    let lang = syntaxHighlightDeletions && state.facet(language)
     let dom = document.createElement("div")
     dom.className = "cm-deletedChunk"
-    if (mergeControls) {
-      let buttons = dom.appendChild(document.createElement("div"))
-      buttons.className = "cm-chunkButtons"
-      let accept = buttons.appendChild(document.createElement("button"))
-      accept.name = "accept"
-      accept.textContent = state.phrase("Accept")
-      accept.onmousedown = e => { e.preventDefault(); acceptChunk(view, view.posAtDOM(dom)) }
-      let reject = buttons.appendChild(document.createElement("button"))
-      reject.name = "reject"
-      reject.textContent = state.phrase("Reject")
-      reject.onmousedown = e => { e.preventDefault(); rejectChunk(view, view.posAtDOM(dom)) }
-    }
 
     let content = dom.appendChild(document.createElement("del"))
     let changes = chunk.changes, changeI = 0, inside = false
-    function add(from: number, to: number, cls: string) {
-      for (let at = from; at < to;) {
-        let nextStop = to, nodeCls = cls + (inside ? " cm-deletedText" : "")
-        if (highlightChanges && changeI < changes.length) {
-          let nextBound = inside ? changes[changeI].toA : changes[changeI].fromA
-          if (nextBound <= nextStop) {
-            nextStop = nextBound
-            if (inside) changeI++
-            inside = !inside
-          }
-        }
-        if (nextStop > at) {
-          let node = document.createTextNode(text.slice(at, nextStop))
-          if (nodeCls) {
-            let span = dom.appendChild(document.createElement("span"))
-            span.className = nodeCls
-            content.appendChild(node)
-          } else {
-            content.appendChild(node)
-          }
-        }
-        at = nextStop
+    
+    let at = 0;
+    for (let change of changes) {
+      let {fromA, toA} = change;
+      // means that we already decorated this chunk inside buildChunkDeco
+      if (fromA === toA) {
+        const node = document.createTextNode(text.slice(at, toA));
+        content.appendChild(node);
+        at = toA;
+        continue;
+      }
+      // should be decorated as "insertion"
+      if (toA > fromA) {
+        const node = document.createTextNode(text.slice(at, fromA));
+        content.appendChild(node);
+        const span = document.createElement("span");
+        span.style.backgroundColor = "green";
+        span.textContent = text.slice(fromA, toA);
+        content.appendChild(span);
+        at = toA;
+        continue;
       }
     }
-
-    if (lang) {
-      let tree = lang.parser.parse(text), pos = 0
-      highlightTree(tree, {style: tags => highlightingFor(state, tags)}, (from, to, cls) => {
-        if (from > pos) add(pos, from, "")
-        add(from, to, cls)
-        pos = to
-      })
-      add(pos, text.length, "")
-    } else {
-      add(0, text.length, "")
+    // add remaining text
+    if (at < text.length) {
+      const node = document.createTextNode(text.slice(at));
+      content.appendChild(node);
     }
     return dom
   }

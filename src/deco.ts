@@ -57,7 +57,8 @@ const changedLineGutterMarker = new class extends GutterMarker {
 function buildChunkDeco(chunk: Chunk, doc: Text, isA: boolean, highlight: boolean,
                         builder: RangeSetBuilder<Decoration>,
                         gutterBuilder: RangeSetBuilder<GutterMarker> | null) {
-  let from = isA ? chunk.fromA : chunk.fromB, to = isA ? chunk.toA : chunk.toB
+  let from = chunk.fromB
+  let to = chunk.toB
   let changeI = 0
   if (from != to) {
     builder.add(from, from, changedLine)
