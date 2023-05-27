@@ -77,14 +77,6 @@ function toChunks(changes: readonly Change[], a: Text, b: Text, offA: number, of
     let [fromA, fromB] = fromLine(change.fromA + offA, change.fromB + offB, a, b)
     let [toA, toB] = toLine(change.toA + offA, change.toB + offB, a, b)
     let chunk = [change.offset(-fromA + offA, -fromB + offB)]
-    while (i < changes.length - 1) {
-      let next = changes[i + 1]
-      let [nextA, nextB] = fromLine(next.fromA + offA, next.fromB + offB, a, b)
-      if (nextA > toA + 1 && nextB > toB + 1) break
-      chunk.push(next.offset(-fromA + offA, -fromB + offB))
-      ;[toA, toB] = toLine(next.toA + offA, next.toB + offB, a, b)
-      i++
-    }
     chunks.push(new Chunk(chunk, fromA, Math.max(fromA, toA), fromB, Math.max(fromB, toB)))
   }
   return chunks
