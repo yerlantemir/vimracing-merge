@@ -54,6 +54,14 @@ const changedLineGutterMarker = new class extends GutterMarker {
   elementClass = "cm-changedLineGutter"
 }
 
+const emptyLineGutterMarker = new class extends GutterMarker {
+  elementClass = "cm-emptyLineGutter"
+}
+
+
+const emptyLine = Decoration.line({
+  attributes: {class: "cm-emptyChangedLine"}
+})
 function buildChunkDeco(chunk: Chunk, doc: Text, isA: boolean, highlight: boolean,
                         builder: RangeSetBuilder<Decoration>,
                         gutterBuilder: RangeSetBuilder<GutterMarker> | null) {
@@ -61,18 +69,26 @@ function buildChunkDeco(chunk: Chunk, doc: Text, isA: boolean, highlight: boolea
   let to = chunk.toB
   let changeI = 0
   if (from != to) {
-    builder.add(from, from, changedLine)
+    let isFirstLineEmpty = doc.lineAt(from).length === 0
+    builder.add(from, from, isFirstLineEmpty ? emptyLine: changedLine)
     builder.add(from, to, isA ? deleted : inserted)
-    if (gutterBuilder) gutterBuilder.add(from, from, changedLineGutterMarker)
+    if (gutterBuilder) gutterBuilder.add(from, from, isFirstLineEmpty? emptyLineGutterMarker: changedLineGutterMarker)
     for (let iter = doc.iterRange(from, to - 1), pos = from; !iter.next().done;) {
+
       if (iter.lineBreak) {
         pos++
-        builder.add(pos, pos, changedLine)
-        if (gutterBuilder) gutterBuilder.add(pos, pos, changedLineGutterMarker)
+
+        let isEmptyLine = doc.lineAt(pos).length == 0
+        console.log(doc.lineAt(pos), isEmptyLine);
+        
+        builder.add(pos, pos, isEmptyLine? emptyLine: changedLine)
+        if (gutterBuilder) gutterBuilder.add(pos, pos, isEmptyLine ? emptyLineGutterMarker: changedLineGutterMarker)
         continue
       }
       let lineEnd = pos + iter.value.length
       if (highlight) while (changeI < chunk.changes.length) {
+
+
         let nextChange = chunk.changes[changeI]
         let nextFrom = from + (isA ? nextChange.fromA : nextChange.fromB)
         let nextTo = from + (isA ? nextChange.toA : nextChange.toB)
@@ -81,10 +97,13 @@ function buildChunkDeco(chunk: Chunk, doc: Text, isA: boolean, highlight: boolea
         if (nextTo < lineEnd) changeI++
         else break
       }
+      
       pos = lineEnd
     }
   }
 }
+
+
 
 function getChunkDeco(view: EditorView) {
   let chunks = view.state.field(ChunkField)

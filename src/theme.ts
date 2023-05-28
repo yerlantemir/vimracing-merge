@@ -50,6 +50,12 @@ export const baseTheme = EditorView.baseTheme({
     background: "#ffcccc",
     color: "#8b0000"
   },
+  ".cm-emptyChangedLine": {
+    "background": "#ffcccc"
+  },
+  ".cm-emptyLineGutter": {
+    "background": "#ffcccc"
+  },
 
   "&dark.cm-merge-a .cm-changedText, &dark .cm-deletedChunk .cm-deletedText": {
     background: "#ffcccc",
