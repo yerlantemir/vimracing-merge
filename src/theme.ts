@@ -40,37 +40,37 @@ export const baseTheme = EditorView.baseTheme({
   },
 
   "&.cm-merge-a .cm-changedLine, .cm-deletedChunk": {
-    backgroundColor: "rgba(160, 128, 100, .08)"
+    backgroundColor: "var(--color-deleted-chunk)"
   },
   "&.cm-merge-b .cm-changedLine": {
-    backgroundColor: "rgba(100, 160, 128, .08)"
+    backgroundColor: "var(--color-deleted-chunk)"
   },
 
   "&light.cm-merge-a .cm-changedText, &light .cm-deletedChunk .cm-deletedText": {
-    background: "#663a3a",
-    color: "#8b0000"
+    background: "var(--color-delete-background)",
+    color: "var(--color-delete)"
   },
   ".cm-emptyChangedLine": {
-    "background": "#663a3a"
+    "background": "var(--color-delete-background)"
   },
   ".cm-emptyLineGutter": {
-    "background": "#663a3a"
+    "background": "var(--color-delete-background)"
   },
 
   "&dark.cm-merge-a .cm-changedText, &dark .cm-deletedChunk .cm-deletedText": {
-    background: "#663a3a",
+    background: "var(--color-delete-background)",
     
-    color: "#8b0000"
+    color: "var(--color-delete)"
   },
 
   "&light.cm-merge-b .cm-changedText": {
-    background: "#663a3a",
-    color: "#8b0000"
+    background: "var(--color-delete-background)",
+    color: "var(--color-delete)"
   },
 
   "&dark.cm-merge-b .cm-changedText": {
-    background: "#663a3a",
-    color: "#8b0000"
+    background: "var(--color-delete-background)",
+    color: "var(--color-delete)"
   },
 
   "del, ins": {

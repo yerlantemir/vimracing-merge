@@ -160,7 +160,7 @@ function deletionWidget(state: EditorState, chunk: Chunk) {
         const node = document.createTextNode(text.slice(at, fromA));
         content.appendChild(node);
         const span = document.createElement('span');
-        span.style.backgroundColor = '#2c663a';
+        span.style.backgroundColor = 'var(--color-insert)';
         span.textContent = text.slice(fromA, toA);
         content.appendChild(span);
         at = toA;
