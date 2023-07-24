@@ -16,12 +16,12 @@ import {
   RangeSet,
   ChangeSet
 } from '@codemirror/state';
-import { language, highlightingFor } from '@codemirror/language';
-import { highlightTree } from '@lezer/highlight';
 import { Chunk, setChunks, ChunkField } from './chunk';
 import { Change } from './diff';
-import { decorateChunks, mergeConfig } from './deco';
+import { createDecorateChunksPlugin, mergeConfig } from './deco';
 import { baseTheme } from './theme';
+
+const decorateChunks = createDecorateChunksPlugin(true);
 
 interface UnifiedMergeConfig {
   /// The other document to compare the editor content with.
