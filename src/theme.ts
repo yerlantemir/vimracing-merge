@@ -64,13 +64,11 @@ export const baseTheme = EditorView.baseTheme({
   },
 
   "&light.cm-merge-b .cm-changedText": {
-    background: "var(--color-delete-background)",
-    color: "var(--color-delete)"
+    background: "var(--color-insert)",
   },
 
   "&dark.cm-merge-b .cm-changedText": {
-    background: "var(--color-delete-background)",
-    color: "var(--color-delete)"
+    background: "var(--color-insert)",
   },
 
   "del, ins": {
