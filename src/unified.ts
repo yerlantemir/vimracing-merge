@@ -67,7 +67,7 @@ export function unifiedMergeView(config: UnifiedMergeConfig) {
     Prec.low(decorateChunks),
     deletedChunks,
     baseTheme,
-    EditorView.editorAttributes.of({ class: 'cm-merge-b' }),
+    EditorView.editorAttributes.of({ class: 'cm-merge-unified' }),
     EditorState.transactionExtender.of((tr) => {
       const updateDoc = tr.effects.find((e) => e.is(updateOriginalDoc));
       if (!tr.docChanged && !updateDoc) return null;

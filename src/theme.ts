@@ -45,6 +45,9 @@ export const baseTheme = EditorView.baseTheme({
   "&.cm-merge-b .cm-changedLine": {
     backgroundColor: "var(--color-deleted-chunk)"
   },
+  "&.cm-merge-unified .cm-changedLine": {
+    backgroundColor: "var(--color-deleted-chunk)"
+  },
 
   "&light.cm-merge-a .cm-changedText, &light .cm-deletedChunk .cm-deletedText": {
     background: "var(--color-delete-background)",
@@ -59,15 +62,22 @@ export const baseTheme = EditorView.baseTheme({
 
   "&dark.cm-merge-a .cm-changedText, &dark .cm-deletedChunk .cm-deletedText": {
     background: "var(--color-delete-background)",
-    
     color: "var(--color-delete)"
   },
 
-  "&light.cm-merge-b .cm-changedText": {
-    background: "var(--color-insert)",
+  "&dark.cm-merge-unified .cm-changedText": {
+    color: "var(--color-delete)",
+    background: "var(--color-delete-background)",
+  },
+  "&light.cm-merge-unified .cm-changedText": {
+    color: "var(--color-delete)",
+    background: "var(--color-delete-background)",
   },
 
   "&dark.cm-merge-b .cm-changedText": {
+    background: "var(--color-insert)",
+  },
+  "&light.cm-merge-b .cm-changedText": {
     background: "var(--color-insert)",
   },
 
@@ -110,4 +120,6 @@ export const baseTheme = EditorView.baseTheme({
   "&dark.cm-merge-a .cm-changedLineGutter, &dark .cm-deletedLineGutter": { background: "#fa9" },
   "&light.cm-merge-b .cm-changedLineGutter": { background: "#2b2" },
   "&dark.cm-merge-b .cm-changedLineGutter": { background: "#8f8" },
+  "&light.cm-merge-unified .cm-changedLineGutter": { background: "#2b2" },
+  "&dark.cm-merge-unified .cm-changedLineGutter": { background: "#8f8" },
 })
