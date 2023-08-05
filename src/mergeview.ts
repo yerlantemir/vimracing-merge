@@ -2,10 +2,11 @@ import {EditorView} from "@codemirror/view"
 import {EditorStateConfig, Transaction, EditorState, StateEffect, Prec, Compartment} from "@codemirror/state"
 import {Chunk, setChunks, ChunkField} from "./chunk"
 import {createDecorateChunksPlugin, updateSpacers, Spacers, adjustSpacers, collapseUnchanged,
-        mergeConfig, changeGutter} from "./deco"
+        mergeConfig, createChangeGuttter} from "./deco"
 import {baseTheme, externalTheme} from "./theme"
 
 const decorateChunks = createDecorateChunksPlugin(false);
+const changeGutter = createChangeGuttter(false);
 
 /// Configuration options to `MergeView` that can be provided both
 /// initially and to [`reconfigure`](#merge.MergeView.reconfigure).

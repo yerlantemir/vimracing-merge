@@ -65,12 +65,17 @@ export function createDecorateChunksPlugin(unified: boolean) {
   );
 }
 
-export const changeGutter = Prec.low(
-  gutter({
-    class: 'cm-changeGutter',
-    markers: (view) => view.plugin(decorateChunks)?.gutter || RangeSet.empty
-  })
-);
+export const createChangeGuttter = (unified: boolean) => {
+  const decorateChunks = createDecorateChunksPlugin(unified);
+
+  const changeGutter = Prec.low(
+    gutter({
+      class: 'cm-changeGutter',
+      markers: (view) => view.plugin(decorateChunks)?.gutter || RangeSet.empty
+    })
+  );
+  return changeGutter;
+};
 
 function chunksChanged(s1: EditorState, s2: EditorState) {
   return s1.field(ChunkField, false) != s2.field(ChunkField, false);
